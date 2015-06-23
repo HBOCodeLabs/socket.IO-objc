@@ -197,6 +197,7 @@ static NSString* kSecureXHRPortURL = @"https://%@:%d/socket.io/1/xhr-polling/%@"
 
 - (void) connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
+    #pragma unused(connection)
     DEBUGLOG(@"didReceiveData(): %@", data);
     [_data appendData:data];
 }
@@ -243,6 +244,7 @@ static NSString* kSecureXHRPortURL = @"https://%@:%d/socket.io/1/xhr-polling/%@"
 
         // Now all of the odd-numbered indices are the packets (1, 3, 5, etc.)
         [split enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            #pragma unused(stop)
             if (idx % 2 != 0) {
                 [packets addObject:obj];
             }
@@ -266,6 +268,8 @@ static NSString* kSecureXHRPortURL = @"https://%@:%d/socket.io/1/xhr-polling/%@"
         NSArray *messages = [self packetsFromPayload:message];
         if([delegate respondsToSelector:@selector(onData:)]) {
             [messages enumerateObjectsUsingBlock:^(NSString *message, NSUInteger idx, BOOL *stop) {
+                #pragma unused(idx)
+                #pragma unused(stop)
                 [delegate onData:message];
             }];
         }

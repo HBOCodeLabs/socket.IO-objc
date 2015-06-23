@@ -96,6 +96,7 @@ static NSString* kSecureSocketPortURL = @"wss://%@:%d/socket.io/1/websocket/%@";
 
 - (void) webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message
 {
+    #pragma unused(webSocket)
     if([delegate respondsToSelector:@selector(onData:)]) {
         [delegate onData:message];
     }
@@ -103,11 +104,13 @@ static NSString* kSecureSocketPortURL = @"wss://%@:%d/socket.io/1/websocket/%@";
 
 - (void) webSocketDidOpen:(SRWebSocket *)webSocket
 {
+    #pragma unused(webSocket)
     DEBUGLOG(@"Socket opened.");
 }
 
 - (void) webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error
 {
+    #pragma unused(webSocket)
     DEBUGLOG(@"Socket failed with error ... %@", [error localizedDescription]);
     // Assuming this resulted in a disconnect
     if([delegate respondsToSelector:@selector(onDisconnect:)]) {
@@ -120,6 +123,10 @@ static NSString* kSecureSocketPortURL = @"wss://%@:%d/socket.io/1/websocket/%@";
             reason:(NSString *)reason
           wasClean:(BOOL)wasClean
 {
+    #pragma unused(webSocket)
+    #pragma unused(code)
+    #pragma unused(reason)
+    #pragma unused(wasClean)
     DEBUGLOG(@"Socket closed. %@", reason);
     if([delegate respondsToSelector:@selector(onDisconnect:)]) {
         [delegate onDisconnect:[NSError errorWithDomain:SocketIOError

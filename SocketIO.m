@@ -129,6 +129,7 @@ NSString* const SocketIOException = @"SocketIOException";
         // create a query parameters string
         NSMutableString *query = [[NSMutableString alloc] initWithString:@""];
         [params enumerateKeysAndObjectsUsingBlock: ^(id key, id value, BOOL *stop) {
+            #pragma unused(stop)
             [query appendFormat:@"&%@=%@", key, value];
         }];
         
@@ -674,11 +675,13 @@ NSString* const SocketIOException = @"SocketIOException";
 
 - (void) connection:(NSURLConnection *)connection didReceiveData:(NSData *)data 
 {
-    [_httpRequestData appendData:data]; 
+    #pragma unused(connection)
+    [_httpRequestData appendData:data];
 }
 
 - (void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error 
 {
+    #pragma unused(connection)
     NSLog(@"ERROR: handshake failed ... %@", [error localizedDescription]);
     
     int errorCode = [error code] == 403 ? SocketIOUnauthorized : SocketIOHandshakeFailed;
@@ -699,7 +702,8 @@ NSString* const SocketIOException = @"SocketIOException";
 }
 
 - (void) connectionDidFinishLoading:(NSURLConnection *)connection 
-{ 	
+{
+    #pragma unused(connection)
  	NSString *responseString = [[NSString alloc] initWithData:_httpRequestData encoding:NSASCIIStringEncoding];
 
     DEBUGLOG(@"connectionDidFinishLoading() %@", responseString);
@@ -799,12 +803,14 @@ NSString* const SocketIOException = @"SocketIOException";
 - (BOOL) connection:(NSURLConnection *)connection
 canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace
 {
+    #pragma unused(connection)
     return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
 }
 
 - (void) connection:(NSURLConnection *)connection
 didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
+    #pragma unused(connection)
     if ([challenge.protectionSpace.authenticationMethod
          isEqualToString:NSURLAuthenticationMethodServerTrust]) {
         // we only trust our own domain
